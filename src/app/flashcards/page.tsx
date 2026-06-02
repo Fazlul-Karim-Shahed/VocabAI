@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAppStore } from '@/lib/store';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { RefreshCcw, Check, X, LibraryBig, Trophy } from 'lucide-react';
+import { RefreshCcw, Check, X, LibraryBig, Trophy, Shuffle } from 'lucide-react';
 import Link from 'next/link';
 
 export default function FlashcardsPage() {
@@ -24,11 +24,33 @@ export default function FlashcardsPage() {
     setIsFlipped(false);
     setDirection(status === 'known' ? 1 : -1);
     
-    if (currentIndex < activeCards.length - 1) {
-      setCurrentIndex(currentIndex + 1);
+    const nextLength = status === 'known' ? activeCards.length - 1 : activeCards.length;
+    
+    if (nextLength === 0) return;
+
+    // Default to sequential
+    if (status === 'known') {
+      if (currentIndex >= nextLength) {
+        setCurrentIndex(0);
+      }
     } else {
-      // Loop back or show completion
-      setCurrentIndex(0);
+      if (currentIndex < nextLength - 1) {
+        setCurrentIndex(currentIndex + 1);
+      } else {
+        setCurrentIndex(0);
+      }
+    }
+  };
+
+  const handleSkip = () => {
+    if (activeCards.length > 1) {
+      let nextIndex = Math.floor(Math.random() * activeCards.length);
+      while (nextIndex === currentIndex) {
+        nextIndex = Math.floor(Math.random() * activeCards.length);
+      }
+      setIsFlipped(false);
+      setDirection(1);
+      setCurrentIndex(nextIndex);
     }
   };
 
@@ -56,8 +78,18 @@ export default function FlashcardsPage() {
           <LibraryBig className="h-5 w-5" />
           <span className="font-medium">Practice</span>
         </div>
-        <div className="text-sm font-medium text-white/50 bg-white/5 px-3 py-1 rounded-full border border-white/10">
-          {currentIndex + 1} / {activeCards.length}
+        <div className="flex items-center gap-3">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleSkip}
+            className="h-8 px-3 rounded-full bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/10 text-xs font-medium"
+          >
+            Skip this time
+          </Button>
+          <div className="text-sm font-medium text-white/50 bg-white/5 px-3 py-1 rounded-full border border-white/10">
+            {currentIndex + 1} / {activeCards.length}
+          </div>
         </div>
       </div>
 
@@ -95,26 +127,24 @@ export default function FlashcardsPage() {
         </AnimatePresence>
       </div>
 
-      {isFlipped && (
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-center gap-4 w-full mt-8"
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex items-center justify-center gap-4 w-full mt-8"
+      >
+        <Button 
+          onClick={(e) => { e.stopPropagation(); handleNext('learning'); }}
+          className="flex-1 h-14 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 rounded-2xl"
         >
-          <Button 
-            onClick={(e) => { e.stopPropagation(); handleNext('learning'); }}
-            className="flex-1 h-14 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 rounded-2xl"
-          >
-            <X className="h-5 w-5 mr-2" /> Still Learning
-          </Button>
-          <Button 
-            onClick={(e) => { e.stopPropagation(); handleNext('known'); }}
-            className="flex-1 h-14 bg-green-500/10 hover:bg-green-500/20 text-green-500 border border-green-500/20 rounded-2xl"
-          >
-            <Check className="h-5 w-5 mr-2" /> I Know This
-          </Button>
-        </motion.div>
-      )}
+          <X className="h-5 w-5 mr-2" /> Still Learning
+        </Button>
+        <Button 
+          onClick={(e) => { e.stopPropagation(); handleNext('known'); }}
+          className="flex-1 h-14 bg-green-500/10 hover:bg-green-500/20 text-green-500 border border-green-500/20 rounded-2xl"
+        >
+          <Check className="h-5 w-5 mr-2" /> I Know This
+        </Button>
+      </motion.div>
 
       {!isFlipped && (
         <div className="mt-8 text-white/40 flex items-center justify-center gap-2">

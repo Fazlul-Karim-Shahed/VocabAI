@@ -153,13 +153,14 @@ export function ResponseCard({ data }: { data: AIResponseData }) {
                     className="overflow-hidden space-y-4"
                   >
                     {[
-                      { level: 'Beginner', text: data.examples.beginner, color: 'text-green-400', bg: 'bg-green-500/10' },
-                      { level: 'Daily', text: data.examples.daily, color: 'text-blue-400', bg: 'bg-blue-500/10' },
-                      { level: 'Professional', text: data.examples.professional, color: 'text-purple-400', bg: 'bg-purple-500/10' },
+                      { level: 'Beginner', data: data.examples.beginner, color: 'text-green-400', bg: 'bg-green-500/10' },
+                      { level: 'Daily', data: data.examples.daily, color: 'text-blue-400', bg: 'bg-blue-500/10' },
+                      { level: 'Professional', data: data.examples.professional, color: 'text-purple-400', bg: 'bg-purple-500/10' },
                     ].map((ex) => (
                       <div key={ex.level} className="flex flex-col gap-1 p-3 rounded-xl bg-white/5 border border-white/5">
                         <span className={`text-xs font-semibold uppercase tracking-wider ${ex.color}`}>{ex.level}</span>
-                        <p className="text-white/90 text-lg">{ex.text}</p>
+                        <p className="text-white/90 text-lg">{ex.data.english}</p>
+                        <p className="text-blue-400/80 text-sm mt-1">{ex.data.bangla}</p>
                       </div>
                     ))}
                   </motion.div>
@@ -206,21 +207,23 @@ export function ResponseCard({ data }: { data: AIResponseData }) {
                   >
                     <div className="flex flex-col gap-4 md:flex-row">
                       <div className="flex-1 p-4 rounded-xl bg-white/5 border border-white/5">
-                        <h4 className="text-sm font-medium text-white/50 mb-2 uppercase tracking-wider">Synonyms</h4>
+                        <h4 className="text-sm font-medium text-white/50 mb-3 uppercase tracking-wider">Synonyms</h4>
                         <div className="flex flex-wrap gap-2">
                           {data.synonyms.map((syn, i) => (
-                            <Badge key={i} variant="outline" className="border-white/10 text-white/70">
-                              {syn}
+                            <Badge key={i} variant="outline" className="border-white/10 text-white/70 flex gap-1.5 py-1">
+                              <span>{syn.word}</span>
+                              <span className="text-blue-400/80 font-normal">({syn.bangla})</span>
                             </Badge>
                           ))}
                         </div>
                       </div>
                       <div className="flex-1 p-4 rounded-xl bg-white/5 border border-white/5">
-                        <h4 className="text-sm font-medium text-white/50 mb-2 uppercase tracking-wider">Antonyms</h4>
+                        <h4 className="text-sm font-medium text-white/50 mb-3 uppercase tracking-wider">Antonyms</h4>
                         <div className="flex flex-wrap gap-2">
                           {data.antonyms.map((ant, i) => (
-                            <Badge key={i} variant="outline" className="border-white/10 text-white/70">
-                              {ant}
+                            <Badge key={i} variant="outline" className="border-white/10 text-white/70 flex gap-1.5 py-1">
+                              <span>{ant.word}</span>
+                              <span className="text-red-400/80 font-normal">({ant.bangla})</span>
                             </Badge>
                           ))}
                         </div>

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export type AIModel = 'openrouter' | 'gemini' | 'groq' | 'huggingface' | 'ollama';
+export type AIModel = 'gemini-2.5-flash' | 'gemini-2.5-pro' | 'gemini-3.5-flash' | 'gemini-flash-lite-latest' | 'gemini-flash-latest' | 'groq' | 'openrouter';
 
 export interface AppSettings {
   apiKey: string;
@@ -56,7 +56,7 @@ export const useAppStore = create<AppState>()(
     (set) => ({
       settings: {
         apiKey: '',
-        model: 'gemini',
+        model: 'gemini-3.5-flash',
         theme: 'dark',
       },
       updateSettings: (newSettings) =>
@@ -105,7 +105,29 @@ export const useAppStore = create<AppState>()(
         })),
         
       skills: [
-        { id: 'explain', name: 'Explain Word', description: 'Deep explanation with examples', promptTemplate: 'You are an English vocabulary teacher...' },
+        { 
+          id: 'explain', 
+          name: 'Explain Word', 
+          description: 'Deep explanation with examples', 
+          promptTemplate: `You are VocabAI, an AI-powered English vocabulary teacher for Bangla speakers.
+Your task is to explain ONE English word in the simplest, most educational, and visually structured way possible.
+Rules:
+1. First show: English word, IPA pronunciation, Part of speech, Bangla meaning
+2. Then explain the word in VERY easy English.
+3. Every difficult English word MUST contain Bangla meaning inside brackets. Example: "strong emotion (শক্তিশালী অনুভূতি)"
+4. Explain the origin/etymology simply. Keep it short.
+5. Give: noun form, verb form, adjective form, adverb form (if available)
+6. Give 3 sentences: Beginner sentence, Daily conversation sentence, Professional/advanced sentence
+7. Detect difficult words used in your own explanation. For EACH difficult word: Bangla meaning, Very simple explanation, One easy sentence
+8. Add: Synonyms, Antonyms, Common mistakes, Memory tricks
+9. Keep response: Short, Beautiful, Easy to scan, Mobile friendly
+10. Use markdown sections.
+11. Never make the response too long.
+12. Use encouraging educational tone.
+13. Do NOT act like a chatbot.
+14. Do NOT ask follow-up questions.
+15. Output should feel like a premium vocabulary learning app.` 
+        },
         { id: 'ielts', name: 'IELTS Preparation', description: 'Advanced vocabulary for IELTS', promptTemplate: 'You are an IELTS tutor...' },
         { id: 'spoken', name: 'Spoken English', description: 'Everyday conversational use', promptTemplate: 'You are a spoken English trainer...' },
         { id: 'kids', name: 'Kids Learning', description: 'Very simple, fun explanation', promptTemplate: 'Explain this word to a 5-year-old...' },

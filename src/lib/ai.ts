@@ -12,14 +12,14 @@ export interface AIResponseData {
     adverb?: string;
   };
   examples: {
-    beginner: string;
-    daily: string;
-    professional: string;
+    beginner: { english: string; bangla: string };
+    daily: { english: string; bangla: string };
+    professional: { english: string; bangla: string };
   };
   hardWords: { word: string; bangla: string; explanation: string; example: string }[];
   ipa: string;
-  synonyms: string[];
-  antonyms: string[];
+  synonyms: { word: string; bangla: string }[];
+  antonyms: { word: string; bangla: string }[];
   commonMistakes: string;
   mnemonics: string;
 }
@@ -36,9 +36,9 @@ const mockResponse = (word: string): AIResponseData => {
       verb: word,
     },
     examples: {
-      beginner: `I saw a big ${word} in the park.`,
-      daily: `Please don't use ${word} so casually.`,
-      professional: `The scientists continued to study the phenomenon of ${word}.`
+      beginner: { english: `I saw a big ${word} in the park.`, bangla: `আমি পার্কে একটি বড় ${word} দেখেছি।` },
+      daily: { english: `Please don't use ${word} so casually.`, bangla: `দয়া করে এতো সহজে ${word} ব্যবহার করবেন না।` },
+      professional: { english: `The scientists continued to study the phenomenon of ${word}.`, bangla: `বিজ্ঞানীরা ${word} এর ঘটনা নিয়ে গবেষণা চালিয়ে যান।` }
     },
     hardWords: [
       {
@@ -49,22 +49,27 @@ const mockResponse = (word: string): AIResponseData => {
       }
     ],
     ipa: `/${word.toLowerCase()}/`,
-    synonyms: ["example1", "example2"],
-    antonyms: ["opposite1"],
+    synonyms: [{ word: "example1", bangla: "উদাহরণ ১" }, { word: "example2", bangla: "উদাহরণ ২" }],
+    antonyms: [{ word: "opposite1", bangla: "বিপরীত ১" }],
     commonMistakes: `People often confuse '${word}' with something else entirely.`,
     mnemonics: `Think of a ${word} making a sound.`
   };
 };
 
+import { generateVocabularyResponse } from '@/app/actions/ai';
+
 export const fetchAIExplanation = async (
   word: string,
   model: AIModel,
   apiKey: string,
-  skill: string
+  promptTemplate: string
 ): Promise<AIResponseData> => {
-  // In a real app, you would make an API call here.
-  // For now, we simulate an API call with a delay.
-  
+  if (apiKey) {
+    // If we have an API key, call the real Gemini backend with the selected model
+    return await generateVocabularyResponse(word, apiKey, promptTemplate, model);
+  }
+
+  // Fallback to mock implementation if no API key is provided
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(mockResponse(word));

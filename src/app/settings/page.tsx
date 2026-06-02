@@ -11,11 +11,10 @@ import { Save, Settings2 } from 'lucide-react';
 import { ManageSkills } from '@/components/ManageSkills';
 
 const MODELS: { id: AIModel; name: string }[] = [
-  { id: 'gemini', name: 'Gemini (Google)' },
-  { id: 'groq', name: 'Groq (Fast)' },
-  { id: 'openrouter', name: 'OpenRouter' },
-  { id: 'huggingface', name: 'HuggingFace' },
-  { id: 'ollama', name: 'Ollama (Local)' },
+  { id: 'gemini-flash-lite-latest', name: 'Gemini Flash Lite (Fastest & Free)' },
+  { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash' },
+  { id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro (Heavy Duty)' },
+  { id: 'gemini-3.5-flash', name: 'Gemini 3.5 Flash (Cutting Edge)' },
 ];
 
 export default function SettingsPage() {
