@@ -67,15 +67,15 @@ export default function Home() {
             exit={{ opacity: 0, y: -20 }}
             className="text-center space-y-6 mb-12 w-full"
           >
-            <div className="inline-flex items-center justify-center p-2 bg-blue-500/10 text-blue-400 rounded-2xl mb-4 border border-blue-500/20 glass">
-              <Sparkles className="h-5 w-5 mr-2" />
-              <span className="text-sm font-medium">AI-Powered Learning</span>
+            <div className="inline-flex items-center justify-center px-4 py-2 bg-blue-500/10 text-blue-400 rounded-full mb-6 border border-blue-500/20 glass shadow-[0_0_20px_rgba(59,130,246,0.15)]">
+              <Sparkles className="h-4 w-4 mr-2 animate-pulse" />
+              <span className="text-xs font-semibold tracking-wider uppercase">AI-Powered Learning</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-white/90 to-white/40">
+            <h1 className="text-6xl md:text-8xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/30 drop-shadow-sm pb-2">
               Master English<br />Vocabulary Smarter
             </h1>
-            <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed">
-              Understand words deeply with Bangla explanations, flashcards, and AI-powered learning. Just type a word to begin.
+            <p className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed font-medium">
+              Understand words deeply with Bangla explanations, beautiful flashcards, and AI-powered learning. Just type a word to begin.
             </p>
           </motion.div>
         )}
@@ -103,15 +103,15 @@ export default function Home() {
             </div>
             
             {/* Bottom Toolbar */}
-            <div className="flex items-center justify-between px-4 py-3 bg-white/5 border-t border-white/10">
-              <div className="flex items-center bg-black/20 rounded-xl px-1 py-0.5 border border-white/5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 bg-white/5 border-t border-white/10 gap-3">
+              <div className="flex items-center bg-black/20 rounded-xl px-1 py-0.5 border border-white/5 w-full sm:w-auto overflow-hidden">
                 <SkillSelector value={skill} onChange={setSkill} />
               </div>
               
               <Button 
                 type="submit" 
                 disabled={loading || !query.trim()} 
-                className="rounded-xl bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-500/25 px-6 h-10 transition-all font-medium"
+                className="w-full sm:w-auto rounded-xl bg-blue-600 hover:bg-blue-500 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)] px-8 h-12 sm:h-10 transition-all font-semibold text-base sm:text-sm"
               >
                 {loading ? (
                   <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Thinking...</>
