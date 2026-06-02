@@ -64,9 +64,12 @@ export default function FlashcardsPage() {
         <p className="text-white/60 mb-8 max-w-md">
           You've reviewed all your flashcards. Search for new words to add more cards to your collection.
         </p>
-        <Button asChild className="bg-blue-600 hover:bg-blue-500 text-white rounded-xl">
-          <Link href="/">Search New Words</Link>
-        </Button>
+        <Link 
+          href="/" 
+          className="inline-flex items-center justify-center h-10 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl transition-colors"
+        >
+          Search New Words
+        </Link>
       </div>
     );
   }
