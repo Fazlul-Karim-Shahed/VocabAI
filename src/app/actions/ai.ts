@@ -4,11 +4,13 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { AIResponseData } from "@/lib/ai";
 
 export async function generateVocabularyResponse(word: string, apiKey: string, promptTemplate: string, modelId: string = "gemini-flash-latest"): Promise<AIResponseData> {
-  if (!apiKey) {
+  const finalApiKey = apiKey || process.env.GEMINI_API_KEY;
+  
+  if (!finalApiKey) {
     throw new Error("No API key provided. Please set it in the Settings page.");
   }
 
-  const ai = new GoogleGenAI({ apiKey });
+  const ai = new GoogleGenAI({ apiKey: finalApiKey });
 
   const prompt = `${promptTemplate}
 

@@ -64,15 +64,7 @@ export const fetchAIExplanation = async (
   apiKey: string,
   promptTemplate: string
 ): Promise<AIResponseData> => {
-  if (apiKey) {
-    // If we have an API key, call the real Gemini backend with the selected model
-    return await generateVocabularyResponse(word, apiKey, promptTemplate, model);
-  }
-
-  // Fallback to mock implementation if no API key is provided
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(mockResponse(word));
-    }, 1500);
-  });
+  // Always try to call the real Gemini backend. 
+  // If the client apiKey is empty, the server will fallback to process.env.GEMINI_API_KEY
+  return await generateVocabularyResponse(word, apiKey, promptTemplate, model);
 };
