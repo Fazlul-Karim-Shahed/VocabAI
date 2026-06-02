@@ -70,11 +70,11 @@ export default function SettingsPage() {
             <Input 
               type="password" 
               value={apiKey} 
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder={`Enter your ${MODELS.find(m => m.id === model)?.name} API Key`}
-              className="bg-black/20 border-white/10 text-white placeholder:text-white/30 h-12 rounded-xl focus-visible:ring-blue-500/50"
+              readOnly
+              placeholder="Enter your API Key"
+              className="bg-black/20 border-white/10 text-white placeholder:text-white/30 h-12 rounded-xl focus-visible:ring-0 focus:outline-none"
             />
-            <p className="text-xs text-white/40">Your key is stored locally in your browser and never sent to our servers.</p>
+            <p className="text-xs text-white/40">The global API key is securely loaded and locked by the system administrator.</p>
           </div>
 
           <Button 
