@@ -11,7 +11,7 @@ export function SkillSelector({ value, onChange }: { value: string, onChange: (v
   const { skills } = useAppStore();
 
   return (
-    <Select value={value} onValueChange={onChange}>
+    <Select value={value} onValueChange={(val) => { if (val) onChange(val); }}>
       <SelectTrigger className="w-[180px] bg-transparent border-transparent text-white/80 hover:text-white focus:ring-0 focus:ring-offset-0 shadow-none rounded-xl h-10 transition-colors">
         <SelectValue placeholder="Select a skill" />
       </SelectTrigger>
