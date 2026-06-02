@@ -51,7 +51,7 @@ export default function SettingsPage() {
         <CardContent className="space-y-6">
           <div className="space-y-3">
             <Label className="text-white/80">AI Model</Label>
-            <Select value={model} onValueChange={(val: AIModel) => setModel(val)}>
+            <Select value={model} onValueChange={(val) => { if (val) setModel(val as AIModel); }}>
               <SelectTrigger className="w-full bg-black/20 border-white/10 text-white focus:ring-blue-500/50 rounded-xl h-12">
                 <SelectValue placeholder="Select Model" />
               </SelectTrigger>
