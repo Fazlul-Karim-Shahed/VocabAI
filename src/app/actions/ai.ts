@@ -3,7 +3,7 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { AIResponseData } from "@/lib/ai";
 
-export async function generateVocabularyResponse(word: string, apiKey: string, promptTemplate: string, modelId: string = "gemini-flash-latest"): Promise<AIResponseData> {
+export async function generateVocabularyResponse(word: string, apiKey: string, promptTemplate: string, modelId: string = "gemini-flash-lite-latest"): Promise<AIResponseData> {
   const finalApiKey = apiKey || process.env.GEMINI_API_KEY;
   
   if (!finalApiKey) {
