@@ -57,11 +57,11 @@ export default function FlashcardsPage() {
   if (activeCards.length === 0) {
     return (
       <div className="container max-w-4xl mx-auto px-4 py-24 flex flex-col items-center justify-center text-center">
-        <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mb-6 border border-white/10">
+        <div className="w-24 h-24 bg-slate-100 dark:bg-white/5 rounded-full flex items-center justify-center mb-6 border border-slate-200 dark:border-white/10">
           <Trophy className="h-12 w-12 text-yellow-500" />
         </div>
-        <h2 className="text-3xl font-bold text-white mb-4">You're all caught up!</h2>
-        <p className="text-white/60 mb-8 max-w-md">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">You're all caught up!</h2>
+        <p className="text-slate-600 dark:text-white/60 mb-8 max-w-md">
           You've reviewed all your flashcards. Search for new words to add more cards to your collection.
         </p>
         <Link 
@@ -77,12 +77,12 @@ export default function FlashcardsPage() {
   return (
     <div className="container max-w-lg mx-auto px-4 py-12 flex flex-col items-center">
       <div className="w-full flex items-center justify-between mb-8">
-        <div className="flex items-center gap-2 text-white/80">
+        <div className="flex items-center gap-2 text-slate-700 dark:text-white/80">
           <LibraryBig className="h-5 w-5" />
           <span className="font-medium">Practice</span>
         </div>
         <div className="flex items-center gap-3">
-          <div className="text-sm font-medium text-white/50 bg-white/5 px-4 py-1.5 rounded-full border border-white/10">
+          <div className="text-sm font-medium text-slate-500 dark:text-white/50 bg-slate-200/50 dark:bg-white/5 px-4 py-1.5 rounded-full border border-slate-300 dark:border-white/10">
             {currentIndex + 1} / {activeCards.length}
           </div>
         </div>
@@ -104,21 +104,21 @@ export default function FlashcardsPage() {
               className="absolute inset-0 cursor-pointer"
               onClick={() => setIsFlipped(!isFlipped)}
             >
-              <Card className={`w-full h-full glass bg-black/40 backdrop-blur-2xl border-white/10 flex flex-col items-center justify-center p-8 text-center transition-all shadow-2xl rounded-[2rem] hover:border-white/20 ${isFlipped ? 'bg-gradient-to-br from-blue-900/30 to-purple-900/10' : ''}`}>
+              <Card className={`w-full h-full glass bg-white/80 dark:bg-black/40 backdrop-blur-2xl border-slate-200 dark:border-white/10 flex flex-col items-center justify-center p-8 text-center transition-all shadow-2xl rounded-[2rem] hover:border-slate-300 dark:hover:border-white/20 ${isFlipped ? 'bg-gradient-to-br from-blue-100 to-purple-50 dark:from-blue-900/30 dark:to-purple-900/10' : ''}`}>
                 <CardContent className="p-0 flex flex-col items-center justify-center w-full h-full">
                   {!isFlipped ? (
                     <>
-                      <h3 className="text-5xl font-extrabold text-white mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white to-white/60">{currentCard.word}</h3>
-                      <div className="flex items-center gap-2 text-white/30 text-sm mt-4">
+                      <h3 className="text-5xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-slate-900 to-slate-500 dark:from-white dark:to-white/60">{currentCard.word}</h3>
+                      <div className="flex items-center gap-2 text-slate-400 dark:text-white/30 text-sm mt-4">
                         <RefreshCcw className="h-4 w-4 animate-pulse" />
                         <span>Tap to flip</span>
                       </div>
                     </>
                   ) : (
                     <>
-                      <h3 className="text-3xl font-bold text-blue-400 mb-6 drop-shadow-sm">{currentCard.meaning}</h3>
-                      <div className="w-full max-w-[80%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent my-6" />
-                      <p className="text-white/80 italic text-xl text-balance leading-relaxed">"{currentCard.example}"</p>
+                      <h3 className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-6 drop-shadow-sm">{currentCard.meaning}</h3>
+                      <div className="w-full max-w-[80%] h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-white/20 to-transparent my-6" />
+                      <p className="text-slate-700 dark:text-white/80 italic text-xl text-balance leading-relaxed">"{currentCard.example}"</p>
                     </>
                   )}
                 </CardContent>
@@ -152,7 +152,7 @@ export default function FlashcardsPage() {
           <Button
             variant="ghost"
             onClick={handleSkip}
-            className="text-white/40 hover:text-white/80 hover:bg-white/5 rounded-xl h-10 px-6 font-medium transition-colors"
+            className="text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white/80 hover:bg-slate-200/50 dark:hover:bg-white/5 rounded-xl h-10 px-6 font-medium transition-colors"
           >
             Skip this time
           </Button>

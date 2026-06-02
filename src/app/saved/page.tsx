@@ -18,11 +18,11 @@ export default function SavedPage() {
   if (savedResponses.length === 0) {
     return (
       <div className="container max-w-4xl mx-auto px-4 py-24 flex flex-col items-center justify-center text-center">
-        <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mb-6 border border-white/10">
+        <div className="w-24 h-24 bg-slate-100 dark:bg-white/5 rounded-full flex items-center justify-center mb-6 border border-slate-200 dark:border-white/10">
           <Bookmark className="h-12 w-12 text-blue-500/50" />
         </div>
-        <h2 className="text-3xl font-bold text-white mb-4">No saved words yet</h2>
-        <p className="text-white/60 mb-8 max-w-md">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">No saved words yet</h2>
+        <p className="text-slate-600 dark:text-white/60 mb-8 max-w-md">
           Save your favorite explanations to view them offline anytime.
         </p>
       </div>
@@ -32,12 +32,12 @@ export default function SavedPage() {
   return (
     <div className="container max-w-6xl mx-auto px-4 py-12">
       <div className="flex items-center gap-3 mb-8">
-        <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-          <Bookmark className="h-6 w-6 text-white" />
+        <div className="p-3 bg-slate-100 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/10">
+          <Bookmark className="h-6 w-6 text-slate-900 dark:text-white" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">Saved Responses</h1>
-          <p className="text-white/60 text-sm mt-1">Available offline ({savedResponses.length})</p>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Saved Responses</h1>
+          <p className="text-slate-500 dark:text-white/60 text-sm mt-1">Available offline ({savedResponses.length})</p>
         </div>
       </div>
 
@@ -50,13 +50,13 @@ export default function SavedPage() {
             return (
               <Card 
                 key={res.id} 
-                className={`cursor-pointer transition-all border-white/10 overflow-hidden ${isSelected ? 'bg-blue-900/20 ring-1 ring-blue-500/50' : 'bg-white/5 hover:bg-white/10'}`}
+                className={`cursor-pointer transition-all border-slate-200 dark:border-white/10 overflow-hidden ${isSelected ? 'bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-500/50' : 'bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10'}`}
                 onClick={() => setSelectedWord(res.id)}
               >
                 <CardContent className="p-4 flex items-center justify-between">
                   <div>
-                    <h3 className="font-bold text-lg text-white mb-1">{res.word}</h3>
-                    <p className="text-sm text-blue-400 line-clamp-1">{data.banglaMeaning}</p>
+                    <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-1">{res.word}</h3>
+                    <p className="text-sm text-blue-600 dark:text-blue-400 line-clamp-1">{data.banglaMeaning}</p>
                   </div>
                   <Button 
                     variant="ghost" 
@@ -66,7 +66,7 @@ export default function SavedPage() {
                       removeSavedResponse(res.id);
                       if (isSelected) setSelectedWord(null);
                     }}
-                    className="text-white/40 hover:text-red-400 hover:bg-red-400/10"
+                    className="text-slate-400 dark:text-white/40 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-400/10"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
@@ -89,7 +89,7 @@ export default function SavedPage() {
                 <ResponseCard data={JSON.parse(selectedResponse.content)} />
               </motion.div>
             ) : (
-              <div className="h-full min-h-[400px] flex items-center justify-center text-white/40 border border-white/5 rounded-2xl border-dashed bg-white/[0.02]">
+              <div className="h-full min-h-[400px] flex items-center justify-center text-slate-500 dark:text-white/40 border border-slate-200 dark:border-white/5 rounded-2xl border-dashed bg-slate-50 dark:bg-white/[0.02]">
                 Select a word from the list to view its details.
               </div>
             )}

@@ -32,32 +32,32 @@ export default function SettingsPage() {
   return (
     <div className="container max-w-2xl mx-auto px-4 py-12">
       <div className="flex items-center gap-3 mb-8">
-        <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-          <Settings2 className="h-6 w-6 text-white" />
+        <div className="p-3 bg-slate-100 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/10">
+          <Settings2 className="h-6 w-6 text-slate-800 dark:text-white" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">Settings</h1>
-          <p className="text-white/60 text-sm mt-1">Configure your AI models and preferences</p>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Settings</h1>
+          <p className="text-slate-500 dark:text-white/60 text-sm mt-1">Configure your AI models and preferences</p>
         </div>
       </div>
 
-      <Card className="glass-panel border-white/10">
+      <Card className="glass-panel border-slate-200 dark:border-white/10">
         <CardHeader>
-          <CardTitle className="text-xl text-white">AI Configuration</CardTitle>
-          <CardDescription className="text-white/50">
+          <CardTitle className="text-xl text-slate-900 dark:text-white">AI Configuration</CardTitle>
+          <CardDescription className="text-slate-500 dark:text-white/50">
             Select your preferred AI model and enter the corresponding API key.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-3">
-            <Label className="text-white/80">AI Model</Label>
+            <Label className="text-slate-700 dark:text-white/80">AI Model</Label>
             <Select value={model} onValueChange={(val) => { if (val) setModel(val as AIModel); }}>
-              <SelectTrigger className="w-full bg-black/20 border-white/10 text-white focus:ring-blue-500/50 rounded-xl h-12">
+              <SelectTrigger className="w-full bg-slate-100 dark:bg-black/20 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white focus:ring-blue-500/50 rounded-xl h-12">
                 <SelectValue placeholder="Select Model" />
               </SelectTrigger>
-              <SelectContent className="bg-background/95 backdrop-blur-xl border-white/10 text-white">
+              <SelectContent className="bg-white/95 dark:bg-background/95 backdrop-blur-xl border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
                 {MODELS.map((m) => (
-                  <SelectItem key={m.id} value={m.id} className="focus:bg-white/10 focus:text-white cursor-pointer rounded-lg mx-1 my-1">
+                  <SelectItem key={m.id} value={m.id} className="focus:bg-slate-100 dark:focus:bg-white/10 focus:text-slate-900 dark:focus:text-white cursor-pointer rounded-lg mx-1 my-1">
                     {m.name}
                   </SelectItem>
                 ))}
@@ -66,15 +66,15 @@ export default function SettingsPage() {
           </div>
 
           <div className="space-y-3">
-            <Label className="text-white/80">API Key</Label>
+            <Label className="text-slate-700 dark:text-white/80">API Key</Label>
             <Input 
               type="password" 
               value={apiKey} 
               readOnly
               placeholder="Enter your API Key"
-              className="bg-black/20 border-white/10 text-white placeholder:text-white/30 h-12 rounded-xl focus-visible:ring-0 focus:outline-none"
+              className="bg-slate-100 dark:bg-black/20 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/30 h-12 rounded-xl focus-visible:ring-0 focus:outline-none"
             />
-            <p className="text-xs text-white/40">The global API key is securely loaded and locked by the system administrator.</p>
+            <p className="text-xs text-slate-500 dark:text-white/40">The global API key is securely loaded and locked by the system administrator.</p>
           </div>
 
           <Button 

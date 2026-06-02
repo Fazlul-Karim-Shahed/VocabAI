@@ -47,13 +47,13 @@ export function ResponseCard({ data }: { data: AIResponseData }) {
   const SectionHeader = ({ id, title }: { id: string, title: string }) => (
     <button
       onClick={() => toggleSection(id)}
-      className="flex w-full items-center justify-between py-3 text-left font-semibold text-white/90 hover:text-white transition-colors"
+      className="flex w-full items-center justify-between py-3 text-left font-semibold text-slate-800 dark:text-white/90 hover:text-slate-900 dark:hover:text-white transition-colors"
     >
       <span>{title}</span>
       {expandedSection === id ? (
-        <ChevronUp className="h-5 w-5 text-white/50" />
+        <ChevronUp className="h-5 w-5 text-slate-500 dark:text-white/50" />
       ) : (
-        <ChevronDown className="h-5 w-5 text-white/50" />
+        <ChevronDown className="h-5 w-5 text-slate-500 dark:text-white/50" />
       )}
     </button>
   );
@@ -64,21 +64,21 @@ export function ResponseCard({ data }: { data: AIResponseData }) {
       animate={{ opacity: 1, y: 0 }}
       className="w-full max-w-3xl mx-auto"
     >
-      <Card className="glass-card border-white/10 shadow-2xl overflow-hidden rounded-2xl relative">
+      <Card className="glass-card border-slate-200/50 dark:border-white/10 shadow-lg dark:shadow-2xl overflow-hidden rounded-2xl relative">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
         <CardContent className="p-6 md:p-8">
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-8">
             <div>
               <div className="flex items-end gap-3 mb-2">
-                <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
+                <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-white/70">
                   {data.word}
                 </h2>
-                <span className="text-lg text-white/40 mb-1 font-mono">{data.ipa}</span>
-                <Button variant="ghost" size="icon" onClick={() => speak(data.word)} className="h-8 w-8 text-white/60 hover:text-white hover:bg-white/10 rounded-full mb-1">
+                <span className="text-lg text-slate-500 dark:text-white/40 mb-1 font-mono">{data.ipa}</span>
+                <Button variant="ghost" size="icon" onClick={() => speak(data.word)} className="h-8 w-8 text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/10 rounded-full mb-1">
                   <Volume2 className="h-4 w-4" />
                 </Button>
               </div>
-              <p className="text-xl md:text-2xl font-medium text-blue-400">
+              <p className="text-xl md:text-2xl font-medium text-blue-600 dark:text-blue-400">
                 {data.banglaMeaning}
               </p>
             </div>
@@ -87,9 +87,9 @@ export function ResponseCard({ data }: { data: AIResponseData }) {
                 variant="outline"
                 size="sm"
                 onClick={handleCopy}
-                className="bg-white/5 border-white/10 text-white/80 hover:bg-white/10 hover:text-white"
+                className="bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-700 dark:text-white/80 hover:bg-slate-100 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white"
               >
-                {copied ? <CheckCircle2 className="h-4 w-4 mr-2 text-green-400" /> : <Copy className="h-4 w-4 mr-2" />}
+                {copied ? <CheckCircle2 className="h-4 w-4 mr-2 text-green-500 dark:text-green-400" /> : <Copy className="h-4 w-4 mr-2" />}
                 {copied ? 'Copied' : 'Copy'}
               </Button>
               <Button
@@ -98,7 +98,7 @@ export function ResponseCard({ data }: { data: AIResponseData }) {
                 onClick={handleSave}
                 className={isSaved 
                   ? "bg-blue-600 hover:bg-blue-700 text-white"
-                  : "bg-white/5 border-white/10 text-white/80 hover:bg-white/10 hover:text-white"}
+                  : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-700 dark:text-white/80 hover:bg-slate-100 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white"}
               >
                 <Bookmark className={`h-4 w-4 mr-2 ${isSaved ? "fill-white" : ""}`} />
                 {isSaved ? 'Saved' : 'Save'}
@@ -106,7 +106,7 @@ export function ResponseCard({ data }: { data: AIResponseData }) {
             </div>
           </div>
 
-          <div className="space-y-2 divide-y divide-white/5">
+          <div className="space-y-2 divide-y divide-slate-200 dark:divide-white/5">
             {/* Meaning Section */}
             <div className="py-2">
               <SectionHeader id="meaning" title="Meaning & Origin" />
@@ -116,22 +116,22 @@ export function ResponseCard({ data }: { data: AIResponseData }) {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="overflow-hidden text-white/70 space-y-4"
+                    className="overflow-hidden text-slate-600 dark:text-white/70 space-y-4"
                   >
                     <div>
-                      <h4 className="text-sm font-medium text-white/50 mb-1 uppercase tracking-wider">Simple Explanation</h4>
+                      <h4 className="text-sm font-medium text-slate-500 dark:text-white/50 mb-1 uppercase tracking-wider">Simple Explanation</h4>
                       <p className="text-base leading-relaxed">{data.simpleExplanation}</p>
                     </div>
                     <div>
-                      <h4 className="text-sm font-medium text-white/50 mb-1 uppercase tracking-wider">Origin</h4>
+                      <h4 className="text-sm font-medium text-slate-500 dark:text-white/50 mb-1 uppercase tracking-wider">Origin</h4>
                       <p className="text-base leading-relaxed">{data.origin}</p>
                     </div>
                     <div>
-                      <h4 className="text-sm font-medium text-white/50 mb-2 uppercase tracking-wider">Forms</h4>
+                      <h4 className="text-sm font-medium text-slate-500 dark:text-white/50 mb-2 uppercase tracking-wider">Forms</h4>
                       <div className="flex flex-wrap gap-2">
                         {Object.entries(data.forms).map(([key, value]) => value && (
-                          <Badge key={key} variant="secondary" className="bg-white/5 hover:bg-white/10 text-white/80 border border-white/10">
-                            <span className="text-white/40 mr-1">{key}</span> {value}
+                          <Badge key={key} variant="secondary" className="bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-white/80 border border-slate-200 dark:border-white/10">
+                            <span className="text-slate-400 dark:text-white/40 mr-1">{key}</span> {value}
                           </Badge>
                         ))}
                       </div>
@@ -153,14 +153,14 @@ export function ResponseCard({ data }: { data: AIResponseData }) {
                     className="overflow-hidden space-y-4"
                   >
                     {[
-                      { level: 'Beginner', data: data.examples.beginner, color: 'text-green-400', bg: 'bg-green-500/10' },
-                      { level: 'Daily', data: data.examples.daily, color: 'text-blue-400', bg: 'bg-blue-500/10' },
-                      { level: 'Professional', data: data.examples.professional, color: 'text-purple-400', bg: 'bg-purple-500/10' },
+                      { level: 'Beginner', data: data.examples.beginner, color: 'text-green-600 dark:text-green-400', bg: 'bg-green-100 dark:bg-green-500/10' },
+                      { level: 'Daily', data: data.examples.daily, color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-100 dark:bg-blue-500/10' },
+                      { level: 'Professional', data: data.examples.professional, color: 'text-purple-600 dark:text-purple-400', bg: 'bg-purple-100 dark:bg-purple-500/10' },
                     ].map((ex) => (
-                      <div key={ex.level} className="flex flex-col gap-1 p-3 rounded-xl bg-white/5 border border-white/5">
+                      <div key={ex.level} className={`flex flex-col gap-1 p-3 rounded-xl border border-slate-200/50 dark:border-white/5 ${ex.bg}`}>
                         <span className={`text-xs font-semibold uppercase tracking-wider ${ex.color}`}>{ex.level}</span>
-                        <p className="text-white/90 text-lg">{ex.data.english}</p>
-                        <p className="text-blue-400/80 text-sm mt-1">{ex.data.bangla}</p>
+                        <p className="text-slate-800 dark:text-white/90 text-lg">{ex.data.english}</p>
+                        <p className="text-blue-600 dark:text-blue-400/80 text-sm mt-1">{ex.data.bangla}</p>
                       </div>
                     ))}
                   </motion.div>
@@ -180,13 +180,13 @@ export function ResponseCard({ data }: { data: AIResponseData }) {
                     className="overflow-hidden space-y-3"
                   >
                     {data.hardWords.map((hw, i) => (
-                      <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/5 space-y-2">
+                      <div key={i} className="p-4 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5 space-y-2">
                         <div className="flex items-baseline gap-2">
-                          <span className="font-semibold text-white">{hw.word}</span>
-                          <span className="text-sm text-blue-400">{hw.bangla}</span>
+                          <span className="font-semibold text-slate-900 dark:text-white">{hw.word}</span>
+                          <span className="text-sm text-blue-600 dark:text-blue-400">{hw.bangla}</span>
                         </div>
-                        <p className="text-sm text-white/70">{hw.explanation}</p>
-                        <p className="text-sm text-white/50 italic">"{hw.example}"</p>
+                        <p className="text-sm text-slate-600 dark:text-white/70">{hw.explanation}</p>
+                        <p className="text-sm text-slate-500 dark:text-white/50 italic">"{hw.example}"</p>
                       </div>
                     ))}
                   </motion.div>
@@ -206,38 +206,38 @@ export function ResponseCard({ data }: { data: AIResponseData }) {
                     className="overflow-hidden space-y-4"
                   >
                     <div className="flex flex-col gap-4 md:flex-row">
-                      <div className="flex-1 p-4 rounded-xl bg-white/5 border border-white/5">
-                        <h4 className="text-sm font-medium text-white/50 mb-3 uppercase tracking-wider">Synonyms</h4>
+                      <div className="flex-1 p-4 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5">
+                        <h4 className="text-sm font-medium text-slate-500 dark:text-white/50 mb-3 uppercase tracking-wider">Synonyms</h4>
                         <div className="flex flex-wrap gap-2">
                           {data.synonyms.map((syn, i) => (
-                            <Badge key={i} variant="outline" className="border-white/10 text-white/70 flex gap-1.5 py-1">
+                            <Badge key={i} variant="outline" className="border-slate-300 dark:border-white/10 text-slate-700 dark:text-white/70 flex gap-1.5 py-1 bg-white dark:bg-transparent">
                               <span>{syn.word}</span>
-                              <span className="text-blue-400/80 font-normal">({syn.bangla})</span>
+                              <span className="text-blue-600 dark:text-blue-400/80 font-normal">({syn.bangla})</span>
                             </Badge>
                           ))}
                         </div>
                       </div>
-                      <div className="flex-1 p-4 rounded-xl bg-white/5 border border-white/5">
-                        <h4 className="text-sm font-medium text-white/50 mb-3 uppercase tracking-wider">Antonyms</h4>
+                      <div className="flex-1 p-4 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5">
+                        <h4 className="text-sm font-medium text-slate-500 dark:text-white/50 mb-3 uppercase tracking-wider">Antonyms</h4>
                         <div className="flex flex-wrap gap-2">
                           {data.antonyms.map((ant, i) => (
-                            <Badge key={i} variant="outline" className="border-white/10 text-white/70 flex gap-1.5 py-1">
+                            <Badge key={i} variant="outline" className="border-slate-300 dark:border-white/10 text-slate-700 dark:text-white/70 flex gap-1.5 py-1 bg-white dark:bg-transparent">
                               <span>{ant.word}</span>
-                              <span className="text-red-400/80 font-normal">({ant.bangla})</span>
+                              <span className="text-red-600 dark:text-red-400/80 font-normal">({ant.bangla})</span>
                             </Badge>
                           ))}
                         </div>
                       </div>
                     </div>
                     
-                    <div className="p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20">
-                      <h4 className="text-sm font-medium text-yellow-500/80 mb-1 uppercase tracking-wider">Common Mistakes</h4>
-                      <p className="text-sm text-white/80">{data.commonMistakes}</p>
+                    <div className="p-4 rounded-xl bg-yellow-100 dark:bg-yellow-500/10 border border-yellow-200 dark:border-yellow-500/20">
+                      <h4 className="text-sm font-medium text-yellow-600 dark:text-yellow-500/80 mb-1 uppercase tracking-wider">Common Mistakes</h4>
+                      <p className="text-sm text-slate-700 dark:text-white/80">{data.commonMistakes}</p>
                     </div>
 
-                    <div className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20">
-                      <h4 className="text-sm font-medium text-purple-400/80 mb-1 uppercase tracking-wider">Memory Trick</h4>
-                      <p className="text-sm text-white/80">{data.mnemonics}</p>
+                    <div className="p-4 rounded-xl bg-purple-100 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20">
+                      <h4 className="text-sm font-medium text-purple-600 dark:text-purple-400/80 mb-1 uppercase tracking-wider">Memory Trick</h4>
+                      <p className="text-sm text-slate-700 dark:text-white/80">{data.mnemonics}</p>
                     </div>
                   </motion.div>
                 )}

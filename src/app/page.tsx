@@ -67,14 +67,14 @@ export default function Home() {
             exit={{ opacity: 0, y: -20 }}
             className="text-center space-y-6 mb-12 w-full"
           >
-            <div className="inline-flex items-center justify-center px-4 py-2 bg-blue-500/10 text-blue-400 rounded-full mb-6 border border-blue-500/20 glass shadow-[0_0_20px_rgba(59,130,246,0.15)]">
+            <div className="inline-flex items-center justify-center px-4 py-2 bg-blue-100 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-full mb-6 border border-blue-200 dark:border-blue-500/20 glass shadow-[0_0_20px_rgba(59,130,246,0.15)]">
               <Sparkles className="h-4 w-4 mr-2 animate-pulse" />
               <span className="text-xs font-semibold tracking-wider uppercase">AI-Powered Learning</span>
             </div>
-            <h1 className="text-6xl md:text-8xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/30 drop-shadow-sm pb-2">
+            <h1 className="text-6xl md:text-8xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-slate-900 via-slate-800 to-slate-500 dark:from-white dark:via-white dark:to-white/30 drop-shadow-sm pb-2">
               Master English<br />Vocabulary Smarter
             </h1>
-            <p className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed font-medium">
+            <p className="text-lg md:text-xl text-slate-600 dark:text-white/50 max-w-2xl mx-auto leading-relaxed font-medium">
               Understand words deeply with Bangla explanations, beautiful flashcards, and AI-powered learning. Just type a word to begin.
             </p>
           </motion.div>
@@ -88,23 +88,23 @@ export default function Home() {
       >
         <form onSubmit={handleSubmit} className="relative w-full group">
           {/* Animated Glow behind the prompt box */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/30 via-purple-600/30 to-blue-600/30 rounded-[2.5rem] blur-xl opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-500"></div>
+          <div className="absolute -inset-1 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-blue-400/20 dark:from-blue-600/30 dark:via-purple-600/30 dark:to-blue-600/30 rounded-[2.5rem] blur-xl opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-500"></div>
           
-          <div className="relative flex flex-col bg-black/40 backdrop-blur-3xl border border-white/10 hover:border-white/20 transition-colors rounded-[2rem] overflow-hidden shadow-2xl">
+          <div className="relative flex flex-col bg-white/70 dark:bg-black/40 backdrop-blur-3xl border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 transition-colors rounded-[2rem] overflow-hidden shadow-2xl">
             {/* Input Area */}
             <div className="flex items-center px-6 py-5 md:py-6">
-              <Sparkles className="h-6 w-6 text-blue-400 mr-2 flex-shrink-0 animate-pulse" />
+              <Sparkles className="h-6 w-6 text-blue-500 dark:text-blue-400 mr-2 flex-shrink-0 animate-pulse" />
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Enter a word to explore..."
-                className="border-0 bg-transparent text-xl md:text-2xl h-12 px-4 placeholder:text-white/30 text-white focus-visible:ring-0 shadow-none font-medium"
+                className="border-0 bg-transparent text-xl md:text-2xl h-12 px-4 placeholder:text-slate-400 dark:placeholder:text-white/30 text-slate-900 dark:text-white focus-visible:ring-0 shadow-none font-medium"
               />
             </div>
             
             {/* Bottom Toolbar */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 bg-white/5 border-t border-white/10 gap-3">
-              <div className="flex items-center bg-black/20 rounded-xl px-1 py-0.5 border border-white/5 w-full sm:w-auto overflow-hidden">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 bg-slate-50/50 dark:bg-white/5 border-t border-slate-200 dark:border-white/10 gap-3">
+              <div className="flex items-center bg-white dark:bg-black/20 rounded-xl px-1 py-0.5 border border-slate-200 dark:border-white/5 w-full sm:w-auto overflow-hidden">
                 <SkillSelector value={skill} onChange={setSkill} />
               </div>
               
@@ -144,13 +144,13 @@ export default function Home() {
               exit={{ opacity: 0 }}
               className="mt-8 flex flex-wrap items-center justify-center gap-3"
             >
-              <span className="text-sm text-white/40 mr-2">Try examples:</span>
+              <span className="text-sm text-slate-500 dark:text-white/40 mr-2">Try examples:</span>
               {['?Explain Hound', '?Explain Elegant', '?Explain Curious'].map((ex) => (
                 <button
                   key={ex}
                   type="button"
                   onClick={() => handleExampleClick(ex)}
-                  className="px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/5 text-sm text-white/70 transition-colors"
+                  className="px-4 py-2 rounded-full bg-slate-200/50 dark:bg-white/5 hover:bg-slate-300/50 dark:hover:bg-white/10 border border-slate-300/50 dark:border-white/5 text-sm text-slate-700 dark:text-white/70 transition-colors"
                 >
                   {ex}
                 </button>
