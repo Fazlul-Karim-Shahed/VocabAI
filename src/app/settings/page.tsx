@@ -45,7 +45,7 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle className="text-xl text-slate-900 dark:text-white">AI Configuration</CardTitle>
           <CardDescription className="text-slate-500 dark:text-white/50">
-            Select your preferred AI model and enter the corresponding API key.
+            Select your preferred AI model.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -63,18 +63,6 @@ export default function SettingsPage() {
                 ))}
               </SelectContent>
             </Select>
-          </div>
-
-          <div className="space-y-3">
-            <Label className="text-slate-700 dark:text-white/80">API Key</Label>
-            <Input 
-              type="password" 
-              value={apiKey} 
-              readOnly
-              placeholder="Enter your API Key"
-              className="bg-slate-100 dark:bg-black/20 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/30 h-12 rounded-xl focus-visible:ring-0 focus:outline-none"
-            />
-            <p className="text-xs text-slate-500 dark:text-white/40">The global API key is securely loaded and locked by the system administrator.</p>
           </div>
 
           <Button 

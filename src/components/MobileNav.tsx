@@ -33,13 +33,13 @@ export function MobileNav() {
 
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 glass-panel border-t border-slate-200 dark:border-white/10 bg-white/80 dark:bg-black/60 pb-safe">
-      <div className="flex items-center justify-around px-2 py-3">
+      <div className="grid grid-cols-4 px-2 py-2 w-full max-w-full">
         {routes.map((route) => (
           <Link
             key={route.href}
             href={route.href}
             className={cn(
-              "flex flex-col items-center justify-center gap-1 min-w-[4rem] p-2 rounded-xl transition-all duration-300",
+              "flex flex-col items-center justify-center gap-1 py-1.5 rounded-xl transition-all duration-300 min-w-0 overflow-hidden",
               pathname === route.href
                 ? "text-blue-600 dark:text-blue-400"
                 : "text-slate-500 dark:text-white/50 hover:text-slate-900 dark:hover:text-white"

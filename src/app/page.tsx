@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, ArrowRight, Loader2 } from 'lucide-react';
+import { Sparkles, ArrowRight, Loader2, Settings2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { fetchAIExplanation, AIResponseData } from '@/lib/ai';
@@ -11,10 +11,11 @@ import { SkillSelector } from '@/components/SkillSelector';
 import { useAppStore } from '@/lib/store';
 
 const PHRASES = [
-  "new words.",
-  "fluency.",
-  "confidence.",
-  "better English."
+  "the perfect word.",
+  "deeper meanings.",
+  "better articulation.",
+  "effortless fluency.",
+  "smarter vocabulary."
 ];
 
 export default function Home() {
@@ -37,8 +38,8 @@ export default function Home() {
     e.preventDefault();
     if (!query.trim()) return;
 
-    // Extract word from "?Explain Word" format if present
-    const word = query.replace(/^\?(.*?)\s+/i, '').trim();
+    // Extract word from "/Explain Word" format if present
+    const word = query.replace(/^\/(.*?)\s+/i, '').trim();
     if (!word) return;
 
     setLoading(true);
@@ -84,16 +85,46 @@ export default function Home() {
             <h1 className="text-4xl sm:text-6xl md:text-[5.5rem] font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-br from-slate-900 via-slate-700 to-slate-400 dark:from-white dark:via-white/90 dark:to-white/30 drop-shadow-sm leading-[1.1] md:leading-[1.1] min-h-[120px] md:min-h-[220px]">
               Discover <br />
               <AnimatePresence mode="wait">
-                <motion.span
+                <motion.div
                   key={phraseIndex}
-                  initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                  className="inline-block text-blue-600 dark:text-blue-400 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400"
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  variants={{
+                    hidden: { opacity: 0 },
+                    visible: { 
+                      opacity: 1,
+                      transition: { staggerChildren: 0.08, delayChildren: 0.2 } 
+                    },
+                    exit: { 
+                      opacity: 0, 
+                      y: -10, 
+                      transition: { duration: 0.2 } 
+                    }
+                  }}
+                  className="inline-flex items-center mt-2 sm:mt-1 md:mt-0"
                 >
-                  {PHRASES[phraseIndex]}
-                </motion.span>
+                  <span className="inline-block text-blue-600 dark:text-blue-400 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 pb-2 md:pb-4">
+                    {PHRASES[phraseIndex].split('').map((char, index) => (
+                      <motion.span
+                        key={index}
+                        variants={{
+                          hidden: { display: 'none', opacity: 0 },
+                          visible: { display: 'inline', opacity: 1 }
+                        }}
+                        className="inline-block"
+                      >
+                        {char === ' ' ? '\u00A0' : char}
+                      </motion.span>
+                    ))}
+                  </span>
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0, 1, 0] }}
+                    transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                    className="inline-block w-[4px] md:w-[5px] h-[0.9em] bg-blue-500 dark:bg-blue-400 ml-1 rounded-full -translate-y-[0.05em]"
+                  />
+                </motion.div>
               </AnimatePresence>
             </h1>
           </motion.div>
@@ -103,54 +134,71 @@ export default function Home() {
       {/* Search Section - Upgraded Premium Pill Prompt Box */}
       <motion.div 
         layout
-        className="w-full z-10"
+        className="w-full z-10 relative"
       >
         <form onSubmit={handleSubmit} className="relative w-full group flex flex-col gap-6">
-          <div className="relative flex items-center bg-white/70 dark:bg-black/40 backdrop-blur-2xl border border-slate-200/80 dark:border-white/10 rounded-[2.5rem] p-2 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgba(255,255,255,0.02)] transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:hover:shadow-[0_8px_30px_rgba(255,255,255,0.05)] focus-within:ring-4 focus-within:ring-blue-500/20 dark:focus-within:ring-blue-400/20 focus-within:border-blue-400/50 dark:focus-within:border-blue-400/50">
-            <div className="pl-4 pr-2 text-slate-400 dark:text-white/40 group-focus-within:text-blue-500 dark:group-focus-within:text-blue-400 transition-colors">
-              <Sparkles className="h-5 w-5 md:h-6 md:w-6" />
+          {/* Ambient Glow */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[90%] h-full bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-blue-400/20 dark:from-blue-500/20 dark:via-purple-500/20 dark:to-blue-500/20 blur-3xl rounded-[3rem] pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000 mix-blend-multiply dark:mix-blend-screen" />
+          
+          <div className="group/input relative flex items-center bg-white/80 dark:bg-black/50 backdrop-blur-3xl border border-slate-200/80 dark:border-white/10 rounded-[3rem] p-2 sm:p-2.5 shadow-xl shadow-blue-900/5 dark:shadow-blue-900/20 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 dark:hover:shadow-blue-500/20 hover:border-blue-300 dark:hover:border-blue-500/50 focus-within:ring-4 focus-within:ring-blue-500/20 dark:focus-within:ring-blue-400/20 focus-within:border-blue-500/50 dark:focus-within:border-blue-400/50 overflow-hidden">
+            {/* Shimmer effect on hover */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 dark:via-white/5 to-transparent -translate-x-[150%] group-hover/input:translate-x-[150%] transition-transform duration-1000 ease-in-out pointer-events-none" />
+            
+            <div className="relative pl-5 pr-2 text-slate-400 dark:text-white/40 group-focus-within/input:text-blue-600 dark:group-focus-within/input:text-blue-400 transition-colors">
+              <Sparkles className="h-6 w-6 md:h-7 md:w-7 transition-transform duration-500 group-focus-within/input:rotate-12 group-focus-within/input:scale-110" />
             </div>
             <Input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Type any word..."
-              className="flex-1 border-0 bg-transparent text-xl sm:text-2xl md:text-3xl h-14 md:h-16 px-2 placeholder:text-slate-400 dark:placeholder:text-white/30 text-slate-900 dark:text-white focus-visible:ring-0 shadow-none font-semibold tracking-tight"
+              placeholder="What to learn today?"
+              className="relative flex-1 border-0 bg-transparent dark:bg-transparent text-base sm:text-2xl md:text-3xl h-14 sm:h-16 md:h-20 px-2 placeholder:text-slate-400/70 dark:placeholder:text-white/30 text-slate-900 dark:text-white focus-visible:ring-0 shadow-none font-semibold tracking-tight overflow-hidden text-ellipsis"
             />
             <Button 
               type="submit" 
               disabled={loading || !query.trim()} 
-              className="h-12 w-12 md:h-14 md:w-14 rounded-full bg-blue-600 hover:bg-blue-500 dark:bg-blue-500 dark:hover:bg-blue-400 text-white shadow-md transition-all flex-shrink-0 ml-2"
+              className="relative h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 dark:from-blue-500 dark:to-indigo-500 text-white shadow-lg shadow-blue-500/30 dark:shadow-blue-500/20 transition-all duration-300 hover:scale-105 active:scale-95 flex-shrink-0 ml-1 sm:ml-2 disabled:opacity-50 disabled:hover:scale-100"
             >
               {loading ? (
-                <Loader2 className="h-5 w-5 md:h-6 md:w-6 animate-spin" />
+                <Loader2 className="h-6 w-6 md:h-7 md:w-7 animate-spin" />
               ) : (
-                <ArrowRight className="h-5 w-5 md:h-6 md:w-6" />
+                <ArrowRight className="h-6 w-6 md:h-7 md:w-7 transition-transform duration-300 group-focus-within/input:translate-x-1" />
               )}
             </Button>
           </div>
           
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 opacity-70 group-focus-within:opacity-100 transition-opacity duration-500 px-2">
-            <div className="flex items-center gap-3">
-              <span className="text-sm font-medium text-slate-500 dark:text-white/40">Action:</span>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 opacity-70 group-focus-within:opacity-100 transition-opacity duration-500 px-2 sm:px-4 mt-2">
+            
+            {/* Left side: Action pill */}
+            <div className="flex items-center gap-2 px-3 py-2 sm:py-1.5 bg-white/60 dark:bg-black/30 backdrop-blur-xl rounded-full border border-slate-200/60 dark:border-white/10 shadow-sm shadow-slate-200/50 dark:shadow-none w-fit">
+              <div className="flex items-center gap-1.5 opacity-60">
+                <Settings2 className="h-3.5 w-3.5 text-slate-600 dark:text-white/70" />
+                <span className="text-[11px] font-bold text-slate-600 dark:text-white/70 uppercase tracking-widest">Skill</span>
+              </div>
+              <div className="w-px h-3.5 bg-slate-300 dark:bg-white/20 mx-0.5"></div>
               <SkillSelector value={skill} onChange={setSkill} />
             </div>
             
+            {/* Right side: Example Chips */}
             <AnimatePresence>
               {!response && !loading && (
                 <motion.div 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="flex flex-wrap items-center gap-3"
+                  className="flex flex-wrap items-center gap-2"
                 >
-                  {['?Explain Serendipity', '?Explain Ephemeral', '?Explain Eloquent'].map((ex) => (
+                  <span className="text-[11px] font-semibold text-slate-400 dark:text-white/40 uppercase tracking-wider mr-1 hidden sm:block">Try</span>
+                  {['/Explain Serendipity', '/Explain Ephemeral', '/Explain Eloquent'].map((ex) => (
                     <button
                       key={ex}
                       type="button"
                       onClick={() => handleExampleClick(ex)}
-                      className="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-xs font-medium text-slate-600 dark:text-white/60 transition-colors"
+                      className="group/btn relative px-3 py-1.5 sm:py-1 rounded-full bg-slate-100 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border border-slate-200/50 dark:border-white/5 hover:border-blue-200 dark:hover:border-blue-500/30 hover:shadow-md hover:shadow-blue-500/10 dark:hover:shadow-blue-500/20 text-xs font-medium text-slate-600 dark:text-white/70 hover:text-blue-600 dark:hover:text-blue-300 transition-all duration-300 flex items-center justify-center overflow-hidden"
                     >
-                      {ex.replace('?Explain ', '')}
+                      <Sparkles className="h-3 w-3 opacity-0 group-hover/btn:opacity-100 text-blue-500 transition-all duration-300 absolute left-2 -translate-x-2 group-hover/btn:translate-x-0" />
+                      <span className="group-hover/btn:translate-x-2 transition-transform duration-300">
+                        {ex.replace('/Explain ', '')}
+                      </span>
                     </button>
                   ))}
                 </motion.div>

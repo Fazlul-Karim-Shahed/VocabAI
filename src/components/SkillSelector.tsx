@@ -12,7 +12,7 @@ export function SkillSelector({ value, onChange }: { value: string, onChange: (v
 
   return (
     <Select value={value} onValueChange={(val) => { if (val) onChange(val); }}>
-      <SelectTrigger className="w-full sm:w-[180px] bg-transparent border-transparent text-slate-700 dark:text-white/80 hover:text-slate-900 dark:hover:text-white focus:ring-0 focus:ring-offset-0 shadow-none rounded-xl h-10 transition-colors">
+      <SelectTrigger className="w-auto border-0 bg-transparent h-auto text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 focus:ring-0 shadow-none p-0 pr-1 flex gap-1 items-center data-[state=open]:text-blue-700 dark:data-[state=open]:text-blue-300 transition-colors">
         <SelectValue placeholder="Select a skill" />
       </SelectTrigger>
       <SelectContent className="bg-white/95 dark:bg-background/95 backdrop-blur-xl border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
