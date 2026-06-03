@@ -97,9 +97,9 @@ Please provide a comprehensive explanation for all fields in the JSON structure.
       config: {
         responseMimeType: "application/json",
         responseSchema: responseSchema,
-        temperature: 0.0,
-        topK: 1,
-        topP: 0.1,
+        temperature: 0.7,
+        topK: 40,
+        topP: 0.8,
         maxOutputTokens: 8192,
       }
     });
@@ -119,7 +119,11 @@ Please provide a comprehensive explanation for all fields in the JSON structure.
     throw new Error("An error occurred while connecting to the AI. Please try again.");
   }
 
-  const responseText = response.text;
+  let responseText = response.text || "";
+  
+  // Sometimes AI wraps JSON in markdown blocks even in JSON mode
+  responseText = responseText.replace(/^```json\n?/i, "").replace(/\n?```$/i, "").trim();
+
   if (!responseText) {
     throw new Error("Empty response from AI");
   }
@@ -127,7 +131,15 @@ Please provide a comprehensive explanation for all fields in the JSON structure.
   try {
     return JSON.parse(responseText) as AIResponseData;
   } catch (error) {
-    console.error("Failed to parse JSON response from AI:", responseText);
-    throw new Error("The AI returned an invalid or incomplete response. Please try again.");
+    console.error("Failed to parse JSON response from AI. Raw response:", responseText);
+    
+    // Attempt to salvage if it was cut off (basic fix for trailing commas or missing brackets)
+    try {
+      // Extremely basic salvage: if it ends unexpectedly, sometimes we can't save it, but we can try removing trailing commas
+      let salvaged = responseText.replace(/,\s*([\]}])/g, '$1');
+      return JSON.parse(salvaged) as AIResponseData;
+    } catch (e) {
+      throw new Error("The AI returned a malformed response (likely got stuck in a loop). Please try generating again.");
+    }
   }
 }

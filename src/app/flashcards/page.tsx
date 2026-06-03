@@ -70,7 +70,7 @@ export default function FlashcardsPage() {
 
   if (activeCards.length === 0) {
     return (
-      <div className="container max-w-4xl mx-auto px-4 py-24 flex flex-col items-center justify-center text-center">
+      <div className="container max-w-4xl mx-auto px-4 py-12 sm:py-24 flex flex-col items-center justify-center text-center">
         <div className="w-24 h-24 bg-slate-100 dark:bg-white/5 rounded-full flex items-center justify-center mb-6 border border-slate-200 dark:border-white/10">
           <Trophy className="h-12 w-12 text-yellow-500" />
         </div>
@@ -89,8 +89,8 @@ export default function FlashcardsPage() {
   }
 
   return (
-    <div className="container max-w-lg mx-auto px-4 py-12 flex flex-col items-center">
-      <div className="w-full flex items-center justify-between mb-8">
+    <div className="container max-w-lg mx-auto px-4 py-6 sm:py-12 flex flex-col items-center">
+      <div className="w-full flex items-center justify-between mb-4 sm:mb-8">
         <div className="flex items-center gap-2 text-slate-700 dark:text-white/80">
           <LibraryBig className="h-5 w-5" />
           <span className="font-medium">Practice</span>
@@ -102,7 +102,7 @@ export default function FlashcardsPage() {
         </div>
       </div>
 
-      <div className="w-full relative h-[320px] sm:h-[420px] perspective-1000 group">
+      <div className="w-full relative h-[280px] sm:h-[420px] perspective-1000 group">
         {/* Animated Glow behind the flashcard */}
         <div className="absolute -inset-2 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-blue-600/20 rounded-[2.5rem] blur-xl opacity-40 group-hover:opacity-70 transition duration-1000"></div>
 
@@ -156,7 +156,7 @@ export default function FlashcardsPage() {
                 <CardContent className="relative z-10 p-0 flex flex-col items-center justify-center w-full h-full">
                   {!isFlipped ? (
                     <>
-                      <h3 className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-slate-900 to-slate-500 dark:from-white dark:to-white/60">{currentCard.word}</h3>
+                      <h3 className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white mb-4 sm:mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-slate-900 to-slate-500 dark:from-white dark:to-white/60 break-words max-w-[90%]">{currentCard.word}</h3>
                       <div className="flex items-center gap-2 text-slate-400 dark:text-white/30 text-sm mt-4">
                         <RefreshCcw className="h-4 w-4 animate-pulse" />
                         <span>Tap to flip</span>
@@ -164,9 +164,9 @@ export default function FlashcardsPage() {
                     </>
                   ) : (
                     <>
-                      <h3 className="text-2xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400 mb-4 sm:mb-6 drop-shadow-sm">{currentCard.meaning}</h3>
-                      <div className="w-full max-w-[80%] h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-white/20 to-transparent my-4 sm:my-6" />
-                      <p className="text-slate-700 dark:text-white/80 italic text-lg sm:text-xl text-balance leading-relaxed">"{currentCard.example}"</p>
+                      <h3 className="text-xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400 mb-3 sm:mb-6 drop-shadow-sm px-2">{currentCard.meaning}</h3>
+                      <div className="w-full max-w-[80%] h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-white/20 to-transparent my-3 sm:my-6" />
+                      <p className="text-slate-700 dark:text-white/80 italic text-base sm:text-xl text-balance leading-relaxed px-2">"{currentCard.example}"</p>
                     </>
                   )}
                 </CardContent>
@@ -179,7 +179,7 @@ export default function FlashcardsPage() {
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col gap-3 sm:gap-4 w-full mt-6 sm:mt-10 z-10"
+        className="flex flex-col gap-3 sm:gap-4 w-full mt-4 sm:mt-10 z-10"
       >
         <div className="flex items-center justify-center gap-4 w-full">
           <Button 
