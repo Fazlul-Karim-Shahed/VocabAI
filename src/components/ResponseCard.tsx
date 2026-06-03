@@ -3,13 +3,15 @@ import { AIResponseData } from '@/lib/ai';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Bookmark, Copy, Volume2, CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Bookmark, Copy, Volume2, CheckCircle2, ChevronDown, ChevronUp, Loader2 } from 'lucide-react';
 import { useAppStore } from '@/lib/store';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function ResponseCard({ data }: { data: AIResponseData }) {
   const [copied, setCopied] = useState(false);
   const [expandedSection, setExpandedSection] = useState<string | null>('meaning');
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { saveResponse, savedResponses, removeSavedResponse } = useAppStore();
 
   const isSaved = savedResponses.some((r) => r.word === data.word);
@@ -34,8 +36,27 @@ export function ResponseCard({ data }: { data: AIResponseData }) {
 
   const speak = (text: string) => {
     if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'en-US';
+      
+      utterance.onstart = () => {
+        setIsLoading(false);
+        setIsPlaying(true);
+      };
+      
+      utterance.onend = () => {
+        setIsPlaying(false);
+        setIsLoading(false);
+      };
+      
+      utterance.onerror = () => {
+        setIsPlaying(false);
+        setIsLoading(false);
+      };
+      
+      setIsLoading(true);
       window.speechSynthesis.speak(utterance);
     }
   };
@@ -75,8 +96,22 @@ export function ResponseCard({ data }: { data: AIResponseData }) {
                 </h2>
                 <div className="flex items-center gap-2 md:mb-1">
                   <span className="text-base md:text-lg text-slate-500 dark:text-white/40 font-mono">{data.ipa}</span>
-                  <Button variant="ghost" size="icon" onClick={() => speak(data.word)} className="h-8 w-8 text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/10 rounded-full">
-                    <Volume2 className="h-4 w-4" />
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    onClick={() => speak(data.word)} 
+                    disabled={isLoading}
+                    className={`h-8 w-8 rounded-full transition-colors ${
+                      isPlaying 
+                        ? 'text-blue-600 bg-blue-100 dark:text-blue-400 dark:bg-blue-900/30' 
+                        : 'text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/10'
+                    }`}
+                  >
+                    {isLoading ? (
+                      <Loader2 className="h-4 w-4 animate-spin text-blue-500" />
+                    ) : (
+                      <Volume2 className={`h-4 w-4 ${isPlaying ? 'animate-pulse' : ''}`} />
+                    )}
                   </Button>
                 </div>
               </div>
