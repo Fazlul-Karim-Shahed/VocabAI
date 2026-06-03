@@ -113,8 +113,8 @@ export default function Home() {
                 </span>
                 <motion.span
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: [1, 0] }}
-                  transition={{ duration: 0.8, repeat: Infinity, ease: "steps(2)" }}
+                  animate={{ opacity: [1, 0, 1] }}
+                  transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
                   className="inline-block w-[3px] md:w-[4px] h-[0.85em] bg-blue-500 dark:bg-blue-400 rounded-full -translate-y-[0.1em]"
                 />
               </div>
