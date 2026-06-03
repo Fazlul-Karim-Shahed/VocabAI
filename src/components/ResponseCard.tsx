@@ -69,14 +69,16 @@ export function ResponseCard({ data }: { data: AIResponseData }) {
         <CardContent className="p-6 md:p-8">
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-8">
             <div>
-              <div className="flex items-end gap-3 mb-2">
-                <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-white/70">
+              <div className="flex flex-col md:flex-row md:items-end gap-2 md:gap-3 mb-3 md:mb-2">
+                <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-white/70">
                   {data.word}
                 </h2>
-                <span className="text-lg text-slate-500 dark:text-white/40 mb-1 font-mono">{data.ipa}</span>
-                <Button variant="ghost" size="icon" onClick={() => speak(data.word)} className="h-8 w-8 text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/10 rounded-full mb-1">
-                  <Volume2 className="h-4 w-4" />
-                </Button>
+                <div className="flex items-center gap-2 md:mb-1">
+                  <span className="text-base md:text-lg text-slate-500 dark:text-white/40 font-mono">{data.ipa}</span>
+                  <Button variant="ghost" size="icon" onClick={() => speak(data.word)} className="h-8 w-8 text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/10 rounded-full">
+                    <Volume2 className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
               <p className="text-xl md:text-2xl font-medium text-blue-600 dark:text-blue-400">
                 {data.banglaMeaning}

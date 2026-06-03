@@ -26,13 +26,36 @@ export default function Home() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const { settings, skills, addFlashcard } = useAppStore();
   const [phraseIndex, setPhraseIndex] = useState(0);
+  const [displayText, setDisplayText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setPhraseIndex((prev) => (prev + 1) % PHRASES.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+    let timeout: NodeJS.Timeout;
+    const currentPhrase = PHRASES[phraseIndex];
+    
+    if (!isDeleting) {
+      if (displayText.length < currentPhrase.length) {
+        timeout = setTimeout(() => {
+          setDisplayText(currentPhrase.slice(0, displayText.length + 1));
+        }, 50); // typing speed
+      } else {
+        timeout = setTimeout(() => {
+          setIsDeleting(true);
+        }, 2500); // pause before deleting
+      }
+    } else {
+      if (displayText.length > 0) {
+        timeout = setTimeout(() => {
+          setDisplayText(currentPhrase.slice(0, displayText.length - 1));
+        }, 30); // deleting speed
+      } else {
+        setIsDeleting(false);
+        setPhraseIndex((prev) => (prev + 1) % PHRASES.length);
+      }
+    }
+    
+    return () => clearTimeout(timeout);
+  }, [displayText, isDeleting, phraseIndex]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,48 +107,17 @@ export default function Home() {
           >
             <h1 className="text-4xl sm:text-6xl md:text-[5.5rem] font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-br from-slate-900 via-slate-700 to-slate-400 dark:from-white dark:via-white/90 dark:to-white/30 drop-shadow-sm leading-[1.1] md:leading-[1.1] min-h-[120px] md:min-h-[220px]">
               Discover <br />
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={phraseIndex}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  variants={{
-                    hidden: { opacity: 0 },
-                    visible: { 
-                      opacity: 1,
-                      transition: { staggerChildren: 0.08, delayChildren: 0.2 } 
-                    },
-                    exit: { 
-                      opacity: 0, 
-                      y: -10, 
-                      transition: { duration: 0.2 } 
-                    }
-                  }}
-                  className="inline-flex items-center mt-2 sm:mt-1 md:mt-0"
-                >
-                  <span className="inline-block text-blue-600 dark:text-blue-400 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 pb-2 md:pb-4">
-                    {PHRASES[phraseIndex].split('').map((char, index) => (
-                      <motion.span
-                        key={index}
-                        variants={{
-                          hidden: { display: 'none', opacity: 0 },
-                          visible: { display: 'inline', opacity: 1 }
-                        }}
-                        className="inline-block"
-                      >
-                        {char === ' ' ? '\u00A0' : char}
-                      </motion.span>
-                    ))}
-                  </span>
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: [0, 1, 0] }}
-                    transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-                    className="inline-block w-[4px] md:w-[5px] h-[0.9em] bg-blue-500 dark:bg-blue-400 ml-1 rounded-full -translate-y-[0.05em]"
-                  />
-                </motion.div>
-              </AnimatePresence>
+              <div className="inline-flex items-center mt-2 sm:mt-1 md:mt-0 h-[1.2em]">
+                <span className="text-blue-600 dark:text-blue-400 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 pb-2 md:pb-4 pr-[2px]">
+                  {displayText}
+                </span>
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: [1, 0] }}
+                  transition={{ duration: 0.8, repeat: Infinity, ease: "steps(2)" }}
+                  className="inline-block w-[3px] md:w-[4px] h-[0.85em] bg-blue-500 dark:bg-blue-400 rounded-full -translate-y-[0.1em]"
+                />
+              </div>
             </h1>
           </motion.div>
         )}
