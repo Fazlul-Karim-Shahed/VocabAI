@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sparkles, Library, Bookmark, Settings } from "lucide-react";
+import { Sparkles, Library, Bookmark, Settings, History, UserCircle } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/lib/auth-context";
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { user } = useAuth();
 
   const routes = [
     {
@@ -19,6 +21,11 @@ export function Sidebar() {
       href: "/flashcards",
       label: "Flashcards",
       icon: Library,
+    },
+    {
+      href: "/history",
+      label: "History",
+      icon: History,
     },
     {
       href: "/saved",
@@ -40,7 +47,7 @@ export function Sidebar() {
             <Sparkles className="h-5 w-5" />
           </div>
           <span className="text-2xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-slate-900 to-slate-600 dark:from-white dark:to-white/60">
-            VocabAI
+            SmartVoc
           </span>
         </Link>
       </div>
@@ -60,10 +67,22 @@ export function Sidebar() {
             {pathname === route.href && (
               <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-blue-600 dark:bg-blue-500 rounded-r-full" />
             )}
-            <route.icon className={cn(
-              "h-5 w-5 transition-transform duration-300 group-hover:scale-110",
-              pathname === route.href ? "text-blue-600 dark:text-blue-400" : "opacity-70"
-            )} />
+            {route.href === '/settings' && user?.photoURL ? (
+              <img 
+                src={user.photoURL} 
+                referrerPolicy="no-referrer"
+                alt="Profile" 
+                className={cn(
+                  "h-6 w-6 rounded-full ring-2 ring-transparent transition-all duration-300 group-hover:scale-110",
+                  pathname === route.href ? "ring-blue-600 dark:ring-blue-400" : "opacity-90"
+                )} 
+              />
+            ) : (
+              <route.icon className={cn(
+                "h-5 w-5 transition-transform duration-300 group-hover:scale-110",
+                pathname === route.href ? "text-blue-600 dark:text-blue-400" : "opacity-70"
+              )} />
+            )}
             {route.label}
           </Link>
         ))}

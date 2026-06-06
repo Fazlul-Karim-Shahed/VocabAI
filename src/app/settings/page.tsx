@@ -7,8 +7,9 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import { Save, Settings2 } from 'lucide-react';
+import { Save, Settings2, LogIn, LogOut, UserCircle } from 'lucide-react';
 import { ManageSkills } from '@/components/ManageSkills';
+import { useAuth } from '@/lib/auth-context';
 
 const MODELS: { id: AIModel; name: string }[] = [
   { id: 'gemini-flash-lite-latest', name: 'Gemini Flash Lite (Fastest & Free)' },
@@ -22,6 +23,7 @@ export default function SettingsPage() {
   const [model, setModel] = useState<AIModel>(settings.model);
   const [apiKey, setApiKey] = useState(settings.apiKey);
   const [saved, setSaved] = useState(false);
+  const { user, loading, login, logout } = useAuth();
 
   const handleSave = () => {
     updateSettings({ model, apiKey });
@@ -41,7 +43,51 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      <Card className="glass-panel border-slate-200 dark:border-white/10">
+      <Card className="glass-panel border-slate-200 dark:border-white/10 mb-8">
+        <CardHeader>
+          <CardTitle className="text-xl text-slate-900 dark:text-white flex items-center gap-2">
+            <UserCircle className="w-5 h-5 text-blue-500" /> Account
+          </CardTitle>
+          <CardDescription className="text-slate-500 dark:text-white/50">
+            Manage your profile and history synchronization.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {loading ? (
+            <p className="text-slate-500">Loading...</p>
+          ) : user ? (
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-4 text-center sm:text-left">
+                {user.photoURL ? (
+                  <img src={user.photoURL} referrerPolicy="no-referrer" alt="Profile" className="w-16 h-16 rounded-full shadow-md object-cover" />
+                ) : (
+                  <div className="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center shadow-md">
+                    <UserCircle className="w-8 h-8 text-blue-500" />
+                  </div>
+                )}
+                <div>
+                  <h2 className="text-lg font-bold text-slate-900 dark:text-white">{user.displayName || 'User'}</h2>
+                  <p className="text-sm text-slate-500 dark:text-white/60">{user.email}</p>
+                </div>
+              </div>
+              <Button onClick={logout} variant="outline" className="w-full sm:w-auto">
+                <LogOut className="w-4 h-4 mr-2" /> Log Out
+              </Button>
+            </div>
+          ) : (
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p className="text-slate-600 dark:text-white/70 text-sm max-w-md text-center sm:text-left">
+                Sign in to save your history and access your vocabulary from anywhere.
+              </p>
+              <Button onClick={login} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white">
+                <LogIn className="w-4 h-4 mr-2" /> Sign In
+              </Button>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      <Card className="glass-panel border-slate-200 dark:border-white/10 mb-8">
         <CardHeader>
           <CardTitle className="text-xl text-slate-900 dark:text-white">AI Configuration</CardTitle>
           <CardDescription className="text-slate-500 dark:text-white/50">

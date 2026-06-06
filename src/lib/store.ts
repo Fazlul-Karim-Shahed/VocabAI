@@ -36,6 +36,9 @@ interface AppState {
   settings: AppSettings;
   updateSettings: (settings: Partial<AppSettings>) => void;
   
+  pendingSearch: string | null;
+  setPendingSearch: (search: string | null) => void;
+  
   flashcards: Flashcard[];
   addFlashcard: (card: Omit<Flashcard, 'id' | 'addedAt' | 'status'>) => void;
   updateFlashcardStatus: (id: string, status: Flashcard['status']) => void;
@@ -61,6 +64,9 @@ export const useAppStore = create<AppState>()(
       },
       updateSettings: (newSettings) =>
         set((state) => ({ settings: { ...state.settings, ...newSettings } })),
+        
+      pendingSearch: null,
+      setPendingSearch: (search) => set({ pendingSearch: search }),
         
       flashcards: [],
       addFlashcard: (card) =>
@@ -109,7 +115,7 @@ export const useAppStore = create<AppState>()(
           id: 'explain', 
           name: 'Explain Word', 
           description: 'Deep explanation with examples', 
-          promptTemplate: `You are VocabAI, an AI-powered English vocabulary teacher for Bangla speakers.
+          promptTemplate: `You are SmartVoc, an AI-powered English vocabulary teacher for Bangla speakers.
 Your task is to explain ONE English word in the simplest, most educational, and visually structured way possible.
 Rules:
 1. First show: English word, IPA pronunciation, Part of speech, Bangla meaning

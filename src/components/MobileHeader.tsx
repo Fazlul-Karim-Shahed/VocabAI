@@ -13,7 +13,7 @@ export function MobileHeader() {
             <Sparkles className="h-4 w-4" />
           </div>
           <span className="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-slate-900 to-slate-600 dark:from-white dark:to-white/60">
-            VocabAI
+            SmartVoc
           </span>
         </Link>
         <ThemeToggle />

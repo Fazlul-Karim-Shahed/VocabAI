@@ -1,6 +1,6 @@
 {
-  "name": "VocabAI",
-  "short_name": "VocabAI",
+  "name": "SmartVoc",
+  "short_name": "SmartVoc",
   "description": "Master English Vocabulary Smarter with AI",
   "start_url": "/",
   "display": "standalone",

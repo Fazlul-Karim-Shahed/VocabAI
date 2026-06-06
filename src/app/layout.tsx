@@ -6,11 +6,12 @@ import { Sidebar } from "@/components/Sidebar";
 import { MobileNav } from "@/components/MobileNav";
 import { MobileHeader } from "@/components/MobileHeader";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { AuthProvider } from "@/lib/auth-context";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "VocabAI - Master English Vocabulary Smarter",
+  title: "SmartVoc - Master English Vocabulary Smarter",
   description: "Understand words deeply with Bangla explanations, flashcards, and AI-powered learning.",
   manifest: "/manifest.json",
 };
@@ -37,9 +38,10 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <TooltipProvider>
-            <div className="flex min-h-screen flex-col md:flex-row bg-slate-50 dark:bg-black/95">
-              <Sidebar />
+          <AuthProvider>
+            <TooltipProvider>
+              <div className="flex min-h-screen flex-col md:flex-row bg-slate-50 dark:bg-black/95">
+                <Sidebar />
               <div className="flex-1 flex flex-col min-w-0 pb-16 md:pb-0">
                 <MobileHeader />
                 <main className="flex-1 relative flex flex-col">
@@ -54,6 +56,7 @@ export default function RootLayout({
               </div>
             </div>
           </TooltipProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

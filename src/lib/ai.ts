@@ -64,7 +64,8 @@ export const fetchAIExplanation = async (
   apiKey: string,
   promptTemplate: string
 ): Promise<AIResponseData> => {
-  // Always try to call the real Gemini backend. 
-  // If the client apiKey is empty, the server will fallback to process.env.GEMINI_API_KEY
-  return await generateVocabularyResponse(word, apiKey, promptTemplate, model);
+  // If the client apiKey is empty, evaluate the public env var on the client side
+  // Next.js will inline NEXT_PUBLIC_GEMINI_API_KEY at build time here.
+  const actualApiKey = apiKey || process.env.NEXT_PUBLIC_GEMINI_API_KEY || "";
+  return await generateVocabularyResponse(word, actualApiKey, promptTemplate, model);
 };

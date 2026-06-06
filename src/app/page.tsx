@@ -9,6 +9,9 @@ import { fetchAIExplanation, AIResponseData } from '@/lib/ai';
 import { ResponseCard } from '@/components/ResponseCard';
 import { SkillSelector } from '@/components/SkillSelector';
 import { useAppStore } from '@/lib/store';
+import { useAuth } from '@/lib/auth-context';
+import { database } from '@/lib/firebase';
+import { ref, push, set } from 'firebase/database';
 
 const PHRASES = [
   "the perfect word.",
@@ -24,7 +27,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<AIResponseData | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const { settings, skills, addFlashcard } = useAppStore();
+  const { settings, skills, pendingSearch, setPendingSearch } = useAppStore();
+  const { user } = useAuth();
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -57,12 +61,16 @@ export default function Home() {
     return () => clearTimeout(timeout);
   }, [displayText, isDeleting, phraseIndex]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!query.trim()) return;
+  useEffect(() => {
+    if (pendingSearch) {
+      setQuery(pendingSearch);
+      performSearch(pendingSearch);
+      setPendingSearch(null);
+    }
+  }, [pendingSearch]);
 
-    // Extract word from "/Explain Word" format if present
-    const word = query.replace(/^\/(.*?)\s+/i, '').trim();
+  const performSearch = async (searchWord: string) => {
+    const word = searchWord.replace(/^\/(.*?)\s+/i, '').trim();
     if (!word) return;
 
     setLoading(true);
@@ -74,12 +82,21 @@ export default function Home() {
       const data = await fetchAIExplanation(word, settings.model, settings.apiKey, promptTemplate);
       setResponse(data);
       
-      // Auto add to flashcards
-      addFlashcard({
-        word: data.word,
-        meaning: data.banglaMeaning,
-        example: data.examples.beginner.english,
-      });
+      // Save to History (Firebase Realtime Database)
+      if (user) {
+        const historyRef = ref(database, `users/${user.uid}/history`);
+        const newRef = push(historyRef);
+        set(newRef, {
+          word: data.word,
+          banglaMeaning: data.banglaMeaning,
+          examples: {
+            beginner: data.examples.beginner.english,
+            daily: data.examples.daily.english,
+            professional: data.examples.professional.english
+          },
+          timestamp: Date.now()
+        }).catch(err => console.error("Firebase save error", err));
+      }
       
     } catch (error: any) {
       console.error(error);
@@ -87,6 +104,12 @@ export default function Home() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!query.trim()) return;
+    performSearch(query);
   };
 
   const handleExampleClick = (example: string) => {
